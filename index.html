@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Produtos - Farmácia</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 60%;
+            margin: 0 auto;
+        }
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+        label {
+            font-size: 14px;
+            color: #555;
+        }
+        input[type="text"],
+        input[type="number"],
+        input[type="date"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .error {
+            color: red;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Cadastro de Produto - Farmácia</h2>
+    <form id="formProduto" onsubmit="return validarFormulario()">
+        <label for="nomeProduto">Nome do Produto:</label>
+        <input type="text" id="nomeProduto" name="nomeProduto" required>
+        <div id="erroNome" class="error"></div>
+
+        <label for="codigoBarras">Código de Barras (EAN/UPC):</label>
+        <input type="text" id="codigoBarras" name="codigoBarras" required>
+        <div id="erroCodigo" class="error"></div>
+
+        <label for="categoria">Categoria:</label>
+        <select id="categoria" name="categoria" required>
+            <option value="">Selecione...</option>
+            <option value="medicamento">Medicamento</option>
+            <option value="cosmetico">Cosmético</option>
+            <option value="suplemento">Suplemento</option>
+            <option value="higiene">Higiene</option>
+            <option value="outros">Outros</option>
+        </select>
+        <div id="erroCategoria" class="error"></div>
+
+        <label for="marcaProduto">Marca do Produto:</label>
+        <input type="text" id="marcaProduto" name="marcaProduto" required>
+        <div id="erroMarca" class="error"></div>
+
+        <label for="precoVenda">Preço de Venda (R$):</label>
+        <input type="number" id="precoVenda" name="precoVenda" step="0.01" required>
+        <div id="erroPreco" class="error"></div>
+
+        <label for="quantidadeEstoque">Quantidade em Estoque:</label>
+        <input type="number" id="quantidadeEstoque" name="quantidadeEstoque" required>
+        <div id="erroEstoque" class="error"></div>
+
+        <label for="dataValidade">Data de Validade:</label>
+        <input type="date" id="dataValidade" name="dataValidade" required>
+        <div id="erroValidade" class="error"></div>
+
+        <label for="descricaoProduto">Descrição do Produto:</label>
+        <textarea id="descricaoProduto" name="descricaoProduto" rows="4" required></textarea>
+        <div id="erroDescricao" class="error"></div>
+
+        <button type="submit">Cadastrar Produto</button>
+    </form>
+</div>
+
+<script>
+    function validarFormulario() {
+        let isValid = true;
+
+        // Limpar mensagens de erro
+        document.querySelectorAll(".error").forEach((el) => el.innerText = "");
+
+        // Validar nome do produto
+        const nomeProduto = document.getElementById("nomeProduto").value;
+        if (nomeProduto.trim() === "") {
+            document.getElementById("erroNome").innerText = "O nome do produto é obrigatório.";
+            isValid = false;
+        }
+
+        // Validar código de barras
+        const codigoBarras = document.getElementById("codigoBarras").value;
+        if (codigoBarras.trim() === "") {
+            document.getElementById("erroCodigo").innerText = "O código de barras é obrigatório.";
+            isValid = false;
+        }
+
+        // Validar categoria
+        const categoria = document.getElementById("categoria").value;
+        if (categoria === "") {
+            document.getElementById("erroCategoria").innerText = "A categoria é obrigatória.";
+            isValid = false;
+        }
+
+        // Validar marca do produto
+        const marcaProduto = document.getElementById("marcaProduto").value;
+        if (marcaProduto.trim() === "") {
+            document.getElementById("erroMarca").innerText = "A marca do produto é obrigatória.";
+            isValid = false;
+        }
+
+        // Validar preço de venda
+        const precoVenda = document.getElementById("precoVenda").value;
+        if (precoVenda <= 0) {
+            document.getElementById("erroPreco").innerText = "O preço de venda deve ser maior que zero.";
+            isValid = false;
+        }
+
+        // Validar quantidade em estoque
+        const quantidadeEstoque = document.getElementById("quantidadeEstoque").value;
+        if (quantidadeEstoque <= 0) {
+            document.getElementById("erroEstoque").innerText = "A quantidade em estoque deve ser maior que zero.";
+            isValid = false;
+        }
+
+        // Validar data de validade
+        const dataValidade = document.getElementById("dataValidade").value;
+        if (dataValidade === "") {
+            document.getElementById("erroValidade").innerText = "A data de validade é obrigatória.";
+            isValid = false;
+        }
+
+        // Validar descrição do produto
+        const descricaoProduto = document.getElementById("descricaoProduto").value;
+        if (descricaoProduto.trim() === "") {
+            document.getElementById("erroDescricao").innerText = "A descrição do produto é obrigatória.";
+            isValid = false;
+        }
+
+        return isValid;
+    }
+</script>
+
+</body>
+</html>
